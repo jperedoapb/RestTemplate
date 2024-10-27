@@ -1,0 +1,10 @@
+spring:
+  application:
+  name: Api-RestTemplate
+variables:
+  api:
+    all: https://jsonplaceholder.typicode.com/posts/
+
+springdoc:
+  swagger-ui:
+    operations-sorter: method
