@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/api")
@@ -37,7 +37,7 @@ public class PostController implements PostControllerSpec{
             return new ResponseEntity<>(post, HttpStatus.OK);
         } catch (HttpClientErrorException ex) {
             log.error("Error retrieving post with ID {}: {}", id, ex.getMessage());
-            throw new PostNotFoundException("Post no encontrado con ID: " + id);
+            throw new PostNotFoundException("Post not found with ID: " + id);
         }
 
 
@@ -45,8 +45,12 @@ public class PostController implements PostControllerSpec{
     }
 
     @Override
-    public ResponseEntity<PostDto> save(@RequestBody PostDto post){
-        return new ResponseEntity<>(consumirApi.create(post), HttpStatus.CREATED);
+    public ResponseEntity<PostDto> save(@RequestBody PostDto postDto){
+        // Extraer los valores del objeto postDto
+        String title = postDto.getTitle();
+        String body = postDto.getBody();
+        Integer id = postDto.getId();
+        return new ResponseEntity<>(consumirApi.create(title,body, id), HttpStatus.CREATED);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class PostController implements PostControllerSpec{
     @Override
     public ResponseEntity<?> delete(@PathVariable int id){
         consumirApi.delete(id);
-        return new ResponseEntity<>("Post eliminado", HttpStatus.OK);
+        return new ResponseEntity<>("Post delete", HttpStatus.OK);
     }
 
 }

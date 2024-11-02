@@ -17,7 +17,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException ex) {
-        return new ResponseEntity<>("Error al comunicarse con el servicio externo: " + ex.getMessage(),
+        // Extraer solo el mensaje relevante// Extraer solo el mensaje relevante
+        String message = ex.getMessage().replaceFirst("^\\d{3} ", ""); // Eliminar el código de estado del mensaje
+        return new ResponseEntity<>("Error by communicating with external service: " + message,
                 HttpStatus.valueOf(ex.getStatusCode().value()));
     }
 }

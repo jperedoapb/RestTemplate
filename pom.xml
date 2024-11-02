@@ -15,16 +15,27 @@
     <description>Api-RestTemplate</description>
     <url/>
     <licenses>
-        <license/>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>jperedo</id>
+            <name>Jaime Peredo</name>
+            <email>jperedoapb@gmail.com</email>
+            <url>https://www.linkedin.com/in/jaime-alvaro-peredo-botello/</url>
+            <organization>Blog personal</organization>
+            <organizationUrl>https://jalvarus.wordpress.com/</organizationUrl>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:https://github.com/jperedoapb/RestTemplate.git</connection>
+        <developerConnection>scm:git:https://github.com/jperedoapb/RestTemplate.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/jperedoapb/RestTemplate</url>
     </scm>
     <properties>
         <java.version>21</java.version>
@@ -56,6 +67,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -71,6 +87,35 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version> <!-- Asegúrate de usar la última versión -->
+                <configuration>
+                    <rules>
+                        <rule>
+                            <element>CLASS</element>
+                            <limits>
+                                <limit type="COVEREDRATIO" min="0.80"/> <!-- 80% de cobertura mínima -->
+                            </limits>
+                        </rule>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

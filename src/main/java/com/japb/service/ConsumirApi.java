@@ -2,6 +2,7 @@ package com.japb.service;
 
 import com.japb.dto.PostDto;
 
+import com.japb.dto.PostDtoFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -24,6 +25,11 @@ public class ConsumirApi {
     @Value("${variables.api.all}")
     private String allPostDto;
 
+    // Método setter para pruebas
+    public void setAllPostDto(String allPostDto) {
+        this.allPostDto = allPostDto;
+    }
+
     public List<PostDto> getPost(){
         ResponseEntity<List<PostDto>> response = restTemplate.exchange(allPostDto, HttpMethod.GET,null,
                 new ParameterizedTypeReference<List<PostDto>>() {});
@@ -34,7 +40,8 @@ public class ConsumirApi {
         return restTemplate.getForEntity(allPostDto + id, PostDto.class).getBody();
     }
 
-    public PostDto create(PostDto postDto){
+    public PostDto create(String title, String body, Integer userId){
+        PostDto postDto = PostDtoFactory.createDefaultPostDto(title,body,userId);
         return restTemplate.postForObject("https://jsonplaceholder.typicode.com/posts",  postDto, PostDto.class);
     }
 
